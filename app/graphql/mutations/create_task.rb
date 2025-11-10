@@ -16,7 +16,6 @@ module Mutations
       # If the task is valid, return it with no errors
       if task.valid?
         { task: task, errors: [] }
-      binding.pry
       else
         # Format validation errors for GraphQL response
         formatted_errors = task.errors.map do |error|
