@@ -6,7 +6,7 @@ module Mutations
 
     # Define the fields returned by the mutation
     field :task, Types::TaskType, null: true
-    field :errors, [Types::FieldErrorType], null: false
+    field :errors, [ Types::FieldErrorType ], null: false
 
     # Main resolver method that handles task creation
     def resolve(input:)
@@ -16,6 +16,7 @@ module Mutations
       # If the task is valid, return it with no errors
       if task.valid?
         { task: task, errors: [] }
+      binding.pry
       else
         # Format validation errors for GraphQL response
         formatted_errors = task.errors.map do |error|

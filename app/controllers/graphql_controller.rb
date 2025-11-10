@@ -25,7 +25,7 @@ class GraphqlController < ApplicationController
 
   # Catch and report unexpected errors with a 500 status
   rescue => e
-    render json: { errors: [{ message: e.message }] }, status: 500
+    render json: { errors: [ { message: e.message } ] }, status: 500
   end
 
   private

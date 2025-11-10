@@ -1,5 +1,5 @@
-require 'securerandom'
-require 'concurrent'
+require "securerandom"
+require "concurrent"
 
 # In-memory model representing a task with validation and thread-safe storage
 class Task
@@ -7,15 +7,15 @@ class Task
   include ActiveModel::Validations
 
   # Status constants to represent task lifecycle states
-  STATUS_TO_DO = 'To Do'
-  STATUS_IN_PROGRESS = 'In Progress'
-  STATUS_DONE = 'Done'
+  STATUS_TO_DO = "To Do"
+  STATUS_IN_PROGRESS = "In Progress"
+  STATUS_DONE = "Done"
 
   # Attributes representing task properties
   attr_accessor :id, :title, :description, :status, :created_at, :updated_at
 
   # Validation rules with I18n-friendly error keys
-  VALID_STATUSES = [STATUS_TO_DO, STATUS_IN_PROGRESS, STATUS_DONE].freeze
+  VALID_STATUSES = [ STATUS_TO_DO, STATUS_IN_PROGRESS, STATUS_DONE ].freeze
   validates :status, inclusion: { in: VALID_STATUSES, message: :invalid_status }
   validates :title, presence: { message: :title_required }
   validates :description, presence: { message: :description_required }
@@ -55,7 +55,7 @@ class Task
     # Update attributes of a task identified by its ID
     def update(id, title: nil, description: nil, status: nil)
       task = find_by_id(id)
-      return { task: nil, errors: [{ field: "id", message: "Task not found" }] } unless task
+      return { task: nil, errors: [ { field: "id", message: "Task not found" } ] } unless task
       # Assign new values if provided
       task.title = title unless title.nil?
       task.description = description unless description.nil?
@@ -78,7 +78,7 @@ class Task
     # Delete a task by ID and return success status
     def delete(id)
       task = find_by_id(id)
-      return { success: false, errors: [{ field: "id", message: "Task not found" }] } unless task
+      return { success: false, errors: [ { field: "id", message: "Task not found" } ] } unless task
 
       tasks.delete(task)
       { success: true, errors: [] }

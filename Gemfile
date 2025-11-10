@@ -36,7 +36,7 @@ gem "thruster", require: false
 gem "image_processing", "~> 1.2"
 
 # Optional: Handle CORS for APIs (commented out for now)
-# gem "rack-cors"
+gem "rack-cors"
 
 # Thread-safe concurrency primitives (used for in-memory task storage)
 gem "concurrent-ruby"
@@ -51,7 +51,7 @@ group :development, :test do
   # Debugging tool for Ruby and Rails (MRI and Windows only)
   gem "debug", platforms: %i[mri windows], require: "debug/prelude"
   # Core RSpec testing framework
-  gem 'rspec-rails'
+  gem "rspec-rails"
   # Security audit tool for gem dependencies
   gem "bundler-audit", require: false
 

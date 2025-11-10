@@ -6,7 +6,7 @@ module Mutations
 
     # Define the fields returned in the mutation response
     field :task, Types::TaskType, null: true
-    field :errors, [Types::FieldErrorType], null: false
+    field :errors, [ Types::FieldErrorType ], null: false
 
     # Resolver method that performs the update operation
     def resolve(input:)
@@ -20,7 +20,7 @@ module Mutations
       # Return error if task is not found
       return {
         task: nil,
-        errors: [{ field: "id", message: "Task not found" }]
+        errors: [ { field: "id", message: "Task not found" } ]
       } unless task
 
       # Assign new attributes to the task

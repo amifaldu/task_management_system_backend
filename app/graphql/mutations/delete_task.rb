@@ -6,7 +6,7 @@ module Mutations
 
     # Define the fields returned by the mutation
     field :success, Boolean, null: false
-    field :errors, [Types::FieldErrorType], null: false
+    field :errors, [ Types::FieldErrorType ], null: false
 
     # Resolver method that handles the deletion logic
     def resolve(id:)
@@ -38,7 +38,7 @@ module Mutations
           ]
         }
       end
-      
+
       # Remove the task from the in-memory store
       ::Task.tasks.delete(task)
 
