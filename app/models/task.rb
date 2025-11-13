@@ -36,9 +36,9 @@ class Task
       @tasks ||= Concurrent::Array.new
     end
 
-    # Return all tasks
+    # Return all tasks wrapped in paginated collection
     def all
-      tasks
+      TaskCollection.new(tasks)
     end
 
     # Create and validate a new task; return task or invalid instance
@@ -86,7 +86,8 @@ class Task
 
     # Return tasks filtered by status, or all if no filter is applied
     def filter(status: nil)
-      status ? tasks.select { |task| task.status == status } : tasks
+      filtered = status ? tasks.select { |task| task.status == status } : tasks
+      TaskCollection.new(filtered)
     end
   end
 end
