@@ -213,11 +213,14 @@ end
 A `Dockerfile` is included for containerized deployment:
 
 ```bash
-# Build the image
-docker build -t task-management-backend .
+# Docker build
+docker compose -f docker-compose.yml up --build
 
-# Run the container
-docker run -p 3000:3000 task-management-backend
+#Stopping the Application
+docker compose down
+
+#Viewing Logs
+docker compose logs
 ```
 
 ## 📊 API Examples
