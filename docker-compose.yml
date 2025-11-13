@@ -1,0 +1,38 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/rails
+      - bundle_cache:/home/rails/.bundle
+      - tmp:/rails/tmp
+      - db:/rails/db   # Volume for SQLite DB persistence
+    environment:
+      - RAILS_ENV=development
+      - RAILS_LOG_TO_STDOUT=true
+      - WEB_CONCURRENCY=1
+      - DATABASE_URL=sqlite3:/rails/db/development.sqlite3  # SQLite DB path updated
+    command: bundle exec rails server -b 0.0.0.0 -p 3000
+    stdin_open: true
+    tty: true
+
+  solid_queue:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: bundle exec rails solid_queue:start
+    volumes:
+      - .:/rails
+      - bundle_cache:/usr/local/bundle
+    environment:
+      - RAILS_ENV=development
+
+volumes:
+  bundle_cache:
+  tmp:
+  db:   # Volume for SQLite DB persistence
