@@ -67,5 +67,11 @@ RSpec.describe Task, type: :model do
       done_tasks = Task.filter(status: Task::STATUS_DONE)
       expect(done_tasks.all? { |t| t.status == Task::STATUS_DONE }).to be true
     end
+
+    it 'returns TaskCollection instances' do
+      Task.create(title: 'Test', description: 'Test desc')
+      result = Task.filter
+      expect(result).to be_a(TaskCollection)
+    end
   end
 end
