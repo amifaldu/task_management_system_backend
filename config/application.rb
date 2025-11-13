@@ -17,7 +17,7 @@ module TaskManagementSystemBackend
     config.autoload_lib(ignore: %w[assets tasks])
     config.middleware.insert_before 0, Rack::Cors do
       allow do
-      origins "http://localhost:3000"  # React frontend origin
+      origins "http://localhost:5173"  # React frontend origin
       resource "*",
         headers: :any,
         methods: [ :get, :post, :options ],
