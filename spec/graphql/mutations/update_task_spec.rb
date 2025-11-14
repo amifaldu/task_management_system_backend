@@ -30,7 +30,7 @@ RSpec.describe 'UpdateTask Mutation', type: :request do
           id: task.id,
           title: 'Updated Title',
           description: 'Updated Description',
-          status: 'In Progress'
+          status: 'IN_PROGRESS'
         }
       }
     end
@@ -42,7 +42,7 @@ RSpec.describe 'UpdateTask Mutation', type: :request do
       data = json['data']['updateTask']
 
       expect(data['task']['title']).to eq('Updated Title')
-      expect(data['task']['status']).to eq('In Progress')
+      expect(data['task']['status']).to eq('IN_PROGRESS')
       expect(data['errors']).to be_empty
     end
   end

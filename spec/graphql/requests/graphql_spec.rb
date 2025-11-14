@@ -27,7 +27,7 @@ RSpec.describe 'GraphQL Integration', type: :request do
         input: {
           title: 'Integration Test',
           description: 'Testing full flow',
-          status: 'To Do'
+          status: 'TO_DO'
         }
       }
     }
@@ -36,6 +36,7 @@ RSpec.describe 'GraphQL Integration', type: :request do
     data = json['data']['createTask']
 
     expect(data['task']['title']).to eq('Integration Test')
+    expect(data['task']['status']).to eq('TO_DO')
     expect(data['errors']).to eq([])
   end
 end

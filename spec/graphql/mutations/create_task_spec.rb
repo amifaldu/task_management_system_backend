@@ -28,7 +28,7 @@ RSpec.describe 'CreateTask Mutation', type: :request do
         input: {
           title: 'Write specs',
           description: 'Add RSpec tests for GraphQL',
-          status: 'To Do'
+          status: 'TO_DO'
         }
       }
     end
@@ -38,7 +38,7 @@ RSpec.describe 'CreateTask Mutation', type: :request do
       json = JSON.parse(response.body)
       data = json['data']['createTask']
       expect(data['task']['title']).to eq('Write specs')
-      expect(data['task']['status']).to eq('To Do')
+      expect(data['task']['status']).to eq('TO_DO')
       expect(data['errors']).to be_empty
     end
   end
@@ -69,7 +69,7 @@ RSpec.describe 'CreateTask Mutation', type: :request do
         input: {
           title: 'Invalid status',
           description: 'Bad status value',
-          status: 'Unknown'
+          status: 'UNKNOWN'
         }
       }
     end
@@ -78,9 +78,17 @@ RSpec.describe 'CreateTask Mutation', type: :request do
       post '/graphql', params: { query: mutation, variables: variables }
 
       json = JSON.parse(response.body)
-      errors = json['data']['createTask']['errors']
 
-      expect(errors.any? { |e| e['field'] == 'status' }).to be true
+      # GraphQL enum validation errors appear at the top level, not in data.createTask.errors
+      if json['data']&.dig('createTask')
+        # If we get to the mutation, check for validation errors
+        errors = json['data']['createTask']['errors']
+        expect(errors.any? { |e| e['field'] == 'status' }).to be true
+      else
+        # GraphQL-level enum validation error
+        expect(json['errors']).to be_present
+        expect(json['errors'].first['message']).to include('status')
+      end
     end
   end
 end

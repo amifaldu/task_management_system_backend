@@ -10,8 +10,13 @@ module Mutations
 
     # Main resolver method that handles task creation
     def resolve(input:)
+      # Extract attributes from input
+      title = input[:title]
+      description = input[:description]
+      status = input[:status] || Task::STATUS_TO_DO
+
       # Create a new task using the provided input attributes
-      task = Task.create(**input.to_h)
+      task = Task.create(title: title, description: description, status: status)
 
       # If the task is valid, return it with no errors
       if task.valid?

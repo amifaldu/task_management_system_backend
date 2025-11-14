@@ -77,7 +77,7 @@ class Task
 
     # Delete a task by ID and return success status
     def delete(id)
-      task = find_by_id(id)
+      task = tasks.find { |task| task.id == id }
       return { success: false, errors: [ { field: "id", message: "Task not found" } ] } unless task
 
       tasks.delete(task)
