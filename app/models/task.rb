@@ -7,7 +7,6 @@ class Task
   include ActiveModel::Validations
 
   # Status constants to represent task lifecycle states
-  binding.pry
   STATUS_TO_DO = "To Do"
   STATUS_IN_PROGRESS = "In Progress"
   STATUS_DONE = "Done"
@@ -78,7 +77,6 @@ class Task
 
     # Delete a task by ID and return success status
     def delete(id)
-      binding.pry
       task = tasks.find { |task| task.id == id }
       return { success: false, errors: [ { field: "id", message: "Task not found" } ] } unless task
 
