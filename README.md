@@ -159,9 +159,20 @@ Run the test suite:
 # Run all tests
 bundle exec rspec
 
-# Run specific test files
+# Run model specific test files
 bundle exec rspec spec/models/task_spec.rb
-bundle exec rspec spec/requests/graphql_spec.rb
+bundle exec rspec spec/models/task_collection_spec.rb
+
+# Run controller specific test files
+bundle exec rspec spec/graphql/controller/graphql_controller_spec.rb
+
+# Run Graphql mutation specific test files
+bundle exec rspec spec/graphql/mutations/create_task_spec.rb
+bundle exec rspec spec/graphql/mutations/update_task_spec.rb
+bundle exec rspec spec/graphql/mutations/delete_task_spec.rb
+
+# Run Graphql query specific test files
+bundle exec rspec spec/graphql/queries/tasks_query_spec.rb
 
 # Run with coverage
 bundle exec rspec --format documentation
