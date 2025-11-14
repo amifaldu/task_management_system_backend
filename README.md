@@ -1,6 +1,6 @@
 # Task Management System Backend
 
-A modern, API-only Rails application with GraphQL endpoints for managing tasks. This backend provides a complete task management system with in-memory storage, pagination, and comprehensive error handling.
+API-only Rails application with GraphQL endpoints for task management. This backend provides a complete task management system with in-memory storage, pagination, and error handling.
 
 ## 🚀 Features
 
@@ -24,22 +24,23 @@ A modern, API-only Rails application with GraphQL endpoints for managing tasks. 
 
 1. **Clone the repository**
    ```bash
-   git clone <repository-url>
+   git clone https://github.com/amifaldu/task_management_system_backend.git
    cd task_management_system_backend
    ```
 
 2. **Install Ruby dependencies**
+   Initialize a new gemset (if using RVM) then install bundler
+   ```bash
+   gem install bundler
+   ```
+   Install the application dependencies
+   
    ```bash
    bundle install
    ```
-
-3. **Setup the database (for development)**
-   ```bash
-   rails db:create db:migrate
-   ```
-   *Note: This application uses in-memory storage, but Rails still requires database setup.*
-
-4. **Run the development server**
+   
+   *Note: This application uses in-memory storage, so no migration is required.
+5. **Run the development server**
    ```bash
    rails server
    ```
@@ -50,14 +51,13 @@ The server will start on `http://localhost:3000`.
 
 ### GraphQL Endpoint
 
-- **Production/Staging**: `POST /graphql`
 - **Development with GraphiQL**: Visit `http://localhost:3000/graphiql`
 
 ### GraphQL Schema
 
 #### Queries
 
-**Get paginated tasks**
+**Get Task List with pagination**
 ```graphql
 query GetTasks($first: Int, $after: String, $status: StatusEnum) {
   tasks(first: $first, after: $after, status: $status) {
@@ -151,10 +151,6 @@ mutation DeleteTask($id: ID!) {
 }
 ```
 
-#### Enums
-
-- **StatusEnum**: `TO_DO`, `IN_PROGRESS`, `DONE`
-
 ## 🧪 Testing
 
 Run the test suite:
@@ -193,21 +189,6 @@ app/
     └── application_controller.rb
 ```
 
-## 🔧 Configuration
-
-### Environment Variables
-
-The application works out-of-the-box with minimal configuration. For production:
-
-```bash
-# Rails environment
-RAILS_ENV=production
-
-# Server configuration (optional)
-PORT=3000
-BINDING=0.0.0.0
-```
-
 ### CORS Configuration
 
 The application is pre-configured to work with a React frontend on `http://localhost:5173`. To modify:
@@ -232,21 +213,14 @@ end
 A `Dockerfile` is included for containerized deployment:
 
 ```bash
-# Build the image
-docker build -t task-management-backend .
+# Docker build
+docker compose -f docker-compose.yml up --build
 
-# Run the container
-docker run -p 3000:3000 task-management-backend
-```
+#Stopping the Application
+docker compose down
 
-### Traditional Deployment
-
-```bash
-# Precompile assets (if needed)
-RAILS_ENV=production bundle exec rails assets:precompile
-
-# Start the server
-RAILS_ENV=production bundle exec puma -C config/puma.rb
+#Viewing Logs
+docker compose logs
 ```
 
 ## 📊 API Examples
@@ -302,54 +276,9 @@ This application uses **in-memory storage** for simplicity and performance:
 
 - **Storage**: `Concurrent::Array` for thread-safe operations
 - **Persistence**: Data is lost on server restart
-- **Scalability**: Suitable for development, testing, and small-scale applications
-- **Production**: Consider migrating to a database (PostgreSQL, MySQL) for production use
-
-### Migration to Database
-
-To migrate to a database storage:
-
-1. Generate ActiveRecord model: `rails g model task title:string description:text status:string`
-2. Replace in-memory storage methods with ActiveRecord queries
-3. Update the `Task` model to inherit from `ApplicationRecord` instead of `ActiveModel::Model`
-
-## 🤝 Contributing
-
-1. Fork the repository
-2. Create a feature branch: `git checkout -b feature-name`
-3. Make your changes
-4. Run tests: `bundle exec rspec`
-5. Run linter: `bundle exec rubocop`
-6. Commit changes: `git commit -m "Add feature description"`
-7. Push to branch: `git push origin feature-name`
-8. Open a Pull Request
-
-## 📝 License
-
-This project is licensed under the MIT License.
-
-## 🆘 Troubleshooting
-
-### Common Issues
-
-**Server won't start:**
-- Ensure Ruby 3.3.10 is installed
-- Run `bundle install` to install dependencies
-- Check if port 3000 is available
-
-**GraphQL queries return errors:**
-- Verify query syntax using GraphiQL at `/graphiql`
-- Check required fields are provided
-- Review error messages in response
-
-**Tests failing:**
-- Ensure all dependencies are installed: `bundle install`
-- Run `rails db:test:prepare` if using database tests
-- Check test configuration in `spec/rails_helper.rb`
-
-**CORS issues:**
-- Verify frontend origin is configured in `config/application.rb`
-- Check that the Rails server is running
-- Ensure proper HTTP headers are being sent
 
 For additional support, please open an issue in the repository.
+
+## Author
+
+* **Ami Faldu** 
