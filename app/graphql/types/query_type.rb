@@ -14,12 +14,14 @@
 
       def tasks(first: nil, after: nil, status: nil)
         all_tasks = status ? Task.filter(status: status) : Task.all
-        total_count = all_tasks.size
+        # Get the raw collection for size calculation
+        collection = all_tasks.to_a
+        total_count = collection.size
 
-        # Handle pagination
-        offset = after ? after.to_i : 0
+        # Handle pagination - convert cursor (0-based index) to offset
+        offset = after ? after.to_i + 1 : 0  # Add 1 to get next item after cursor
         limit = first || 10  # Default page size
-        sliced_tasks = all_tasks.slice(offset, limit) || []
+        sliced_tasks = collection.slice(offset, limit) || []
 
         # Calculate pagination info
         has_next_page = (offset + limit) < total_count

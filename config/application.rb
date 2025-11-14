@@ -17,7 +17,7 @@ module TaskManagementSystemBackend
     config.autoload_lib(ignore: %w[assets tasks])
     config.middleware.insert_before 0, Rack::Cors do
       allow do
-      origins "http://localhost:5173"  # React frontend origin
+      origins "http://localhost:3001"  # React frontend origin
       resource "*",
         headers: :any,
         methods: [ :get, :post, :options ],
@@ -37,5 +37,8 @@ module TaskManagementSystemBackend
     # Middleware like session, flash, cookies can be added back manually.
     # Skip views, helpers and assets when generating a new resource.
     config.api_only = true
+
+    # Prevent file descriptor exhaustion by limiting concurrent threads
+    config.concurrent_ruby_threads = 10
   end
 end

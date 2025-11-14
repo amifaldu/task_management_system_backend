@@ -31,6 +31,11 @@ class TaskCollection
     TaskCollection.new(@collection.first(num))
   end
 
+  # Make sure to_a returns the collection, not self
+  def to_ary
+    @collection
+  end
+
   # Support for cursor-based pagination
   def to_a
     @collection
